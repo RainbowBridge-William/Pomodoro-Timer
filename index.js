@@ -42,8 +42,8 @@
       id("seconds").textContent = seconds;
     }
 
-    let minInt = setInterval(minuteTimer, 100);
-    let secInt = setInterval(secondTimer, 10);
+    let minInt = setInterval(minuteTimer, 60000);
+    let secInt = setInterval(secondTimer, 1000);
 
     function minuteTimer() {
       minutes--;
