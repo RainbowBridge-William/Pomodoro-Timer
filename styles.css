@@ -72,6 +72,7 @@ button,
   opacity: 0.8;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 #message {
