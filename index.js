@@ -14,8 +14,8 @@
   let minutes = 25;
   let seconds = "00";
 
-  let click = new Audio("./resource/click.mp3")
-  let bell = new Audio("./resource/bell.mp3")
+  let click = new Audio("./resource/click.mp3");
+  let bell = new Audio("./resource/bell.mp3");
 
   /**
    * Add a function that will be called when the window is loaded.
@@ -33,7 +33,21 @@
 
   function start() {
     click.play();
-    setInterval()
+    setInterval(minuteTimer, 60000);
+    setInterval(secondTimer, 1000);
+
+    function minuteTimer() {
+      minutes--;
+      id("minutes").textContent = minutes;
+    }
+
+    function secondTimer() {
+      if (seconds <= 0) {
+        seconds = 60;
+      }
+      seconds--;
+      id("seconds").textContent = seconds;
+    }
   }
 
   /**
@@ -41,9 +55,6 @@
    * every function detailing what it's purpose is
    * Use JSDoc format with @param and @return.
    */
-  // function exampleFunction1() {
-  //   /* SOME CODE */
-  // }
 
   /**
    * Make sure to always add a descriptive comment above
@@ -51,10 +62,6 @@
    * @param {variabletype} someVariable This is a description of someVariable, including, perhaps, preconditions.
    * @returns {returntype} A description of what this function is actually returning
    */
-  // function exampleFunction2(someVariable) {
-  //   /* SOME CODE */
-  //   return something;
-  // }
 
   /** ------------------------------ Helper Functions  ------------------------------ */
   /**
