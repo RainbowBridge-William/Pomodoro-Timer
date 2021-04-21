@@ -29,12 +29,21 @@
     id("minutes").textContent = minutes;
     id("seconds").textContent = seconds;
     id("play").onclick = start;
+    id("refresh").onclick = click.play();
   }
 
   function start() {
     click.play();
-    setInterval(minuteTimer, 60000);
-    setInterval(secondTimer, 1000);
+    id("play").classList.add("disappear");
+    if (minutes === 25) {
+      minutes = 24;
+      seconds = 59;
+      id("minutes").textContent = minutes;
+      id("seconds").textContent = seconds;
+    }
+
+    let minInt = setInterval(minuteTimer, 100);
+    let secInt = setInterval(secondTimer, 10);
 
     function minuteTimer() {
       minutes--;
@@ -47,6 +56,14 @@
       }
       seconds--;
       id("seconds").textContent = seconds;
+      if (minutes <= 0 && seconds <= 0) {
+        bell.play();
+        clearInterval(secInt);
+        clearInterval(minInt);
+        let done = gen("h2");
+        done.textContent = "You completed the session!";
+        id("message").appendChild(done);
+      }
     }
   }
 
