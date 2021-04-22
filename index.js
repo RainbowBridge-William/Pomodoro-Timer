@@ -1,29 +1,25 @@
 /**
- * Name: _your name here_
- * Date: _add date here_
- * Section: CSE 154 _your section here_
+ * Name: William Wang
+ * Date: 4/22/2021
+ * Section: CSE 154 AO
  *
- * -- your description of what this file does here --
- * Do not keep comments from this template in any work you submit (functions included under "Helper
- * functions" are an exception, you may keep the function names/comments of id/qs/qsa/gen)
+ * This index.js counts the minutes and seconds, and updates the time container. When botton
+ * is clicked, Playing audio.
  */
 "use strict";
 
 (function () {
-  // MODULE GLOBAL VARIABLES, CONSTANTS, AND HELPER FUNCTIONS CAN BE PLACED HERE
   let minutes = 25;
   let seconds = "00";
 
   let click = new Audio("./resource/click.mp3");
   let bell = new Audio("./resource/bell.mp3");
 
-  /**
-   * Add a function that will be called when the window is loaded.
-   */
   window.addEventListener("load", init);
 
   /**
-   * CHANGE: Describe what your init function does here.
+   * Initilize minutes and seconds display,
+   * call start function when play button is clicked
    */
   function init() {
     id("minutes").textContent = minutes;
@@ -32,6 +28,9 @@
     id("refresh").onclick = click.play();
   }
 
+  /**
+   * Counting down minutes and seconds
+   */
   function start() {
     click.play();
     id("play").classList.add("disappear");
@@ -45,46 +44,40 @@
     let minInt = setInterval(minuteTimer, 60000);
     let secInt = setInterval(secondTimer, 1000);
 
+    /**
+     * Counting down 1 minute and update minute display
+     */
     function minuteTimer() {
       minutes--;
       id("minutes").textContent = minutes;
     }
 
+    /**
+     * Couting down 1 second and update minute display.
+     * @returns {function} stop timer function to prevent further counting
+     */
     function secondTimer() {
-      if (seconds <= 0) {
+      if (seconds <= 0 && minutes > 0) {
         seconds = 60;
+      } else if (minutes <= 0) {
+        return stopTimer();
       }
       seconds--;
       id("seconds").textContent = seconds;
-      if (minutes <= 0 && seconds <= 0) {
-        bell.play();
-        clearInterval(secInt);
-        clearInterval(minInt);
-        let done = gen("h2");
-        done.textContent = "You completed the session!";
-        id("message").appendChild(done);
-      }
+    }
+
+    /**
+     * Stop the counting and showing complete session message
+     */
+    function stopTimer() {
+      bell.play();
+      clearInterval(secInt);
+      clearInterval(minInt);
+      let done = gen("h2");
+      done.textContent = "You completed the session!";
+      id("message").appendChild(done);
     }
   }
-
-  /**
-   * Make sure to always add a descriptive comment above
-   * every function detailing what it's purpose is
-   * Use JSDoc format with @param and @return.
-   */
-
-  /**
-   * Make sure to always add a descriptive comment above
-   * every function detailing what it's purpose is
-   * @param {variabletype} someVariable This is a description of someVariable, including, perhaps, preconditions.
-   * @returns {returntype} A description of what this function is actually returning
-   */
-
-  /** ------------------------------ Helper Functions  ------------------------------ */
-  /**
-   * Note: You may use these in your code, but remember that your code should not have
-   * unused functions. Remove this comment in your own code.
-   */
 
   /**
    * Returns the element that has the ID attribute with the specified value.
@@ -102,15 +95,6 @@
    */
   function qs(selector) {
     return document.querySelector(selector);
-  }
-
-  /**
-   * Returns the array of elements that match the given CSS selector.
-   * @param {string} selector - CSS query selector
-   * @returns {object[]} array of DOM objects matching the query.
-   */
-  function qsa(selector) {
-    return document.querySelectorAll(selector);
   }
 
   /**

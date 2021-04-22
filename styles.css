@@ -1,3 +1,11 @@
+/**
+ * Name: William Wang
+ * Date: 4/22/2021
+ * Section: CSE 154 AO
+ *
+ * This styles.js sets the styles for the whole counter, giving it a tomato-like and clean feeling.
+ */
+
 body {
   margin: 0;
   padding: 0;
@@ -39,7 +47,7 @@ main {
   height: 20rem;
   border-radius: 100%;
   margin-bottom: 70px;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 #controls {
