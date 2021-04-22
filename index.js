@@ -9,11 +9,12 @@
 "use strict";
 
 (function () {
-  let minutes = 25;
-  let seconds = "00";
-
-  let click = new Audio("./resource/click.mp3");
-  let bell = new Audio("./resource/bell.mp3");
+  const MININTERVAL = 60000;
+  const SECINTERVAL = 1000;
+  const MININITIAL = 25;
+  const SECINITIAL = 60;
+  const click = new Audio("./resource/click.mp3");
+  const bell = new Audio("./resource/bell.mp3");
 
   window.addEventListener("load", init);
 
@@ -22,11 +23,14 @@
    * call start function when play button is clicked
    */
   function init() {
-    id("minutes").textContent = minutes;
-    id("seconds").textContent = seconds;
+    id("minutes").textContent = MININITIAL;
+    id("seconds").textContent = "00";
     id("play").onclick = start;
     id("refresh").onclick = click.play();
   }
+
+  let minutes = MININITIAL; // global variable
+  let seconds = SECINITIAL;
 
   /**
    * Counting down minutes and seconds
@@ -34,15 +38,9 @@
   function start() {
     click.play();
     id("play").classList.add("disappear");
-    if (minutes === 25) {
-      minutes = 24;
-      seconds = 59;
-      id("minutes").textContent = minutes;
-      id("seconds").textContent = seconds;
-    }
 
-    let minInt = setInterval(minuteTimer, 60000);
-    let secInt = setInterval(secondTimer, 1000);
+    let minInt = setInterval(minuteTimer, MININTERVAL);
+    let secInt = setInterval(secondTimer, SECINTERVAL);
 
     /**
      * Counting down 1 minute and update minute display
@@ -54,16 +52,18 @@
 
     /**
      * Couting down 1 second and update minute display.
-     * @returns {function} stop timer function to prevent further counting
      */
     function secondTimer() {
       if (seconds <= 0 && minutes > 0) {
-        seconds = 60;
+        seconds = SECINITIAL;
       } else if (minutes <= 0) {
         return stopTimer();
       }
       seconds--;
       id("seconds").textContent = seconds;
+      if (minutes == MININITIAL) {
+        minuteTimer();
+      }
     }
 
     /**
@@ -86,15 +86,6 @@
    */
   function id(idName) {
     return document.getElementById(idName);
-  }
-
-  /**
-   * Returns the first element that matches the given CSS selector.
-   * @param {string} selector - CSS query selector.
-   * @returns {object} The first DOM object matching the query.
-   */
-  function qs(selector) {
-    return document.querySelector(selector);
   }
 
   /**
