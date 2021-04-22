@@ -8,7 +8,7 @@
  */
 "use strict";
 
-(function () {
+(function() {
   const MININTERVAL = 60000;
   const SECINTERVAL = 1000;
   const MININITIAL = 25;
@@ -52,6 +52,7 @@
 
     /**
      * Couting down 1 second and update minute display.
+     * @returns {function} return stopTimer to prevent further counting
      */
     function secondTimer() {
       if (seconds <= 0 && minutes > 0) {
@@ -61,7 +62,7 @@
       }
       seconds--;
       id("seconds").textContent = seconds;
-      if (minutes == MININITIAL) {
+      if (minutes === MININITIAL) {
         minuteTimer();
       }
     }
